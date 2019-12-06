@@ -1,9 +1,9 @@
-import makeCustomApi from './customApi';
+import makeCustomApi from "./customApi";
 
-export const BASE_RICK_AND_MORTY_URL = 'https://ghibliapi.herokuapp.com';
+export const BASE_RICK_AND_MORTY_URL = "https://rickandmortyapi.com/api/";
 
 export const makeApi = (dependencies = {}) => ({
-    custom: makeCustomApi(dependencies),
+    custom: makeCustomApi(dependencies)
 });
 
 export default makeApi;

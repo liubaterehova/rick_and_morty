@@ -8,7 +8,7 @@ export default class CharacterCard extends Component {
   render() {
     return (
       <Card style={{ width: "700px" }}>
-        <Row type="flex" justify="space-between" align="center">
+        <Row type="flex" justify="space-between">
           <Col span={4}>
             {" "}
             <Avatar size={100} icon="user"></Avatar>

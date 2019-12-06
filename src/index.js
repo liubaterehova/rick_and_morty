@@ -1,18 +1,31 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
+import { Provider } from "react-redux";
+import axios from "axios";
+import { history } from "./history";
+
+import configureStore from "./store";
+
 import * as serviceWorker from "./serviceWorker";
-import HeaderMainPage from "./components/moleculas/HeaderMainPage";
-import SearchPanel from "./components/moleculas/SearchPanel";
-import SortButtons from "./components/moleculas/SortButtons";
-import CharacterCard from "./components/organisms/CharacterCard";
-import ListCharacters from "./components/organisms/ListCharacters";
-import MainPage from "./containers/ConnectMainPage";
+import makeApi from "./api";
+import Root from "./containers/root";
 
-ReactDOM.render( < MainPage / > , document.getElementById("root"));
+import "./index.css";
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+const configure = async () => {
+  const api = makeApi({ client: axios });
+  const store = configureStore({ api, history });
+
+  const rootElement = document.getElementById("root");
+
+  ReactDOM.render(
+    <Provider store={store}>
+      <Root history={history} />{" "}
+    </Provider>,
+    rootElement
+  );
+
+  serviceWorker.unregister();
+};
+
+configure();
