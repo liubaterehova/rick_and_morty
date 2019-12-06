@@ -4,7 +4,6 @@ import { Redirect } from "react-router";
 import { ConnectedRouter } from "connected-react-router";
 
 import { connect } from "react-redux";
-import { history } from "./../../history";
 import MainPage from "../ConnectMainPage";
 
 class Root extends Component {
@@ -14,6 +13,7 @@ class Root extends Component {
       <ConnectedRouter history={history}>
         <Switch>
           <Route path="/main" component={MainPage} />{" "}
+          <Route exact path="/" render={() => <Redirect to="/main" />} />{" "}
         </Switch>{" "}
       </ConnectedRouter>
     );

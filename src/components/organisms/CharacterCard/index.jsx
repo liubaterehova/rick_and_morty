@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { Card, Icon, Avatar } from "antd";
+import { Card, Avatar } from "antd";
 import { Row, Col } from "antd";
 import "./index.css";
-const { Meta } = Card;
 
 export default class CharacterCard extends Component {
   render() {

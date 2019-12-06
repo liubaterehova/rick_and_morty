@@ -4,9 +4,9 @@ import { Pagination } from "antd";
 
 export default class ListCharacters extends Component {
   render() {
-    function showTotal(total) {
-      return `Total ${total} items`;
-    }
+    // function showTotal(total) {
+    //   return `Total ${total} items`;
+    // }
     return (
       <div style={{ width: "700px" }}>
         <CharacterCard />

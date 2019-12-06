@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
-import { Button, Radio, Icon } from "antd";
+import { Radio } from "antd";
 
 export default class SortButtons extends Component {
   state = {
