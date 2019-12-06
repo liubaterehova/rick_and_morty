@@ -5,10 +5,10 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import HeaderMainPage from "./components/moleculas/HeaderMainPage";
 import SearchPanel from "./components/moleculas/SearchPanel";
-import SortButtons from './components/moleculas/SortButtons';
-import CharacterCard from './components/organisms/CharacterCard';
-import ListCharacters from './components/organisms/ListCharacters';
-import MainPage from './components/pages/MainPage';
+import SortButtons from "./components/moleculas/SortButtons";
+import CharacterCard from "./components/organisms/CharacterCard";
+import ListCharacters from "./components/organisms/ListCharacters";
+import MainPage from "./containers/ConnectMainPage";
 
 ReactDOM.render( < MainPage / > , document.getElementById("root"));
 
