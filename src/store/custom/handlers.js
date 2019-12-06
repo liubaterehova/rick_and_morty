@@ -3,22 +3,23 @@ const initialState = {
     allCharacters: [],
     characterCardsOnOnePage: [],
     numberPage: null,
-    activeSortButton: '',
+    activeSortButton: "",
     numberOfCharacters: null,
-    isLoading: false,
+    isLoading: false
 };
 
 export const getAllCharacters = (state, { payload }) => ({
     ...state,
-    isLoading: true,
+    isLoading: true
+});
 
-})
-
-export const getAllCharactersSuccess = (state, { payload }) => ({
-    ...state,
-    isLoading: false,
-    allCharacters: payload
-})
-
+export const getAllCharactersSuccess = (state, { payload }) => {
+    console.log("payload.characters");
+    return {
+        ...state,
+        isLoading: false,
+        allCharacters: payload.characters
+    };
+};
 
 export default initialState;

@@ -7,12 +7,16 @@ function* getAllCharactersSaga({ payload }) {
         let response;
         const custom = makeApi().custom;
         response = yield call([custom, custom.getAllCharacters]);
+        console.log("response", response);
 
         if (response.data) {
             console.log("response.data", response.data);
-            yield put(types.getAllCharactersSuccess({ payload }));
+            yield put(
+                types.getAllCharactersSuccess({ characters: response.data.results })
+            );
         }
     } catch (error) {
+        console.log("errorInSaga");
         yield put(types.processFailure({ error }));
     }
 }
