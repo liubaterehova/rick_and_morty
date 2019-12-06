@@ -10,17 +10,19 @@ export default class CharacterCard extends Component {
       {
         title: "IMF&STATUS",
         dataIndex: "img",
-        defaultFilterValues: ["Jim"],
-        onFilter: (value, record) => record.name.indexOf(value) === 0,
-        sorter: (a, b) => a.name.length - b.name.length,
-        sortDirections: ["descend"]
+        defaultSortOrder: "descend",
+        sorter: (a, b) => {
+          if (a.status > b.status) return 1;
+          if (a.status < b.status) return -1;
+          else return 0;
+        }
       },
       {
         title: "NAME",
         dataIndex: "name",
         defaultSortOrder: "descend",
         sorter: (a, b) => {
-          if (a.name > b.age) return 1;
+          if (a.name > b.name) return 1;
           if (a.name < b.name) return -1;
           else return 0;
         }
@@ -28,10 +30,12 @@ export default class CharacterCard extends Component {
       {
         title: "RACE",
         dataIndex: "race",
-        filterMultiple: false,
-        onFilter: (value, record) => record.address.indexOf(value) === 0,
-        sorter: (a, b) => a.address.length - b.address.length,
-        sortDirections: ["descend", "ascend"]
+        defaultSortOrder: "descend",
+        sorter: (a, b) => {
+          if (a.species > b.species) return 1;
+          if (a.species < b.species) return -1;
+          else return 0;
+        }
       },
       {
         dataIndex: "button1",
@@ -47,7 +51,12 @@ export default class CharacterCard extends Component {
       console.log("characterInData", character);
       return {
         key: character.id,
-        img: <Avatar size={100} icon="user" src={character.image}></Avatar>,
+        img: (
+          <div>
+            <Avatar size={100} icon="user" src={character.image}></Avatar>
+            <div className="spanText">{character.status}</div>
+          </div>
+        ),
         name: character.name,
         race: character.species,
         button1: <Button type="dashed">DETAILS</Button>,

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import CharacterCard from "../CharacterCard";
-import { Pagination, Spin } from "antd";
+import { Spin } from "antd";
 
 export default class ListCharacters extends Component {
   render() {
@@ -10,16 +10,7 @@ export default class ListCharacters extends Component {
     }
     return (
       <div style={{ width: "700px" }}>
-        <div>
-          <CharacterCard characters={characters} />;
-        </div>
-        <Pagination
-          size="large"
-          total={50}
-          showSizeChanger
-          showQuickJumper
-          style={{ textAlign: "center" }}
-        />
+        <CharacterCard characters={characters} />;
       </div>
     );
   }
