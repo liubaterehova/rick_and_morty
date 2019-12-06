@@ -32,8 +32,8 @@ export default class CharacterCard extends Component {
         dataIndex: "race",
         defaultSortOrder: "descend",
         sorter: (a, b) => {
-          if (a.species > b.species) return 1;
-          if (a.species < b.species) return -1;
+          if (a.race > b.race) return 1;
+          if (a.race < b.race) return -1;
           else return 0;
         }
       },
@@ -57,6 +57,7 @@ export default class CharacterCard extends Component {
             <div className="spanText">{character.status}</div>
           </div>
         ),
+        status: character.status,
         name: character.name,
         race: character.species,
         button1: <Button type="dashed">DETAILS</Button>,
