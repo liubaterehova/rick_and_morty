@@ -5,7 +5,9 @@ import MainPage from "../../components/pages/MainPage";
 
 const mapStateToProps = state => {
   return {
-    allCharacters: state.custom.allCharacters
+    allCharacters: state.custom.allCharacters,
+    total: state.custom.total,
+    isLoading: state.custom.isLoading
   };
 };
 

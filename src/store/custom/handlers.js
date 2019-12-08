@@ -2,10 +2,12 @@ const initialState = {
     perPage: null,
     allCharacters: [],
     characterCardsOnOnePage: [],
-    numberPage: null,
+    rangeOfCharacters: [],
+    numberOfPage: 1,
     activeSortButton: "",
     numberOfCharacters: null,
-    isLoading: false
+    isLoading: false,
+    total: null
 };
 
 export const getAllCharacters = (state, { payload }) => ({
@@ -15,10 +17,12 @@ export const getAllCharacters = (state, { payload }) => ({
 
 export const getAllCharactersSuccess = (state, { payload }) => {
     console.log("payload.characters");
+    console.log("total", payload.total);
     return {
         ...state,
         isLoading: false,
-        allCharacters: payload.characters
+        allCharacters: payload.characters,
+        total: payload.total
     };
 };
 

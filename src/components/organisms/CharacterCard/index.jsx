@@ -3,19 +3,39 @@ import { Table, Avatar, Button } from "antd";
 import "./index.css";
 
 export default class CharacterCard extends Component {
+  state = {
+    numberOfPageInAPI: 1,
+    currentPage: 1,
+    pageSize: 10
+  };
+
+  id = 1;
+  componentDidMount() {
+    console.log("Moiunt Number Of Page  In Api", this.state.numberOfPageInAPI);
+    this.props.getAllCharacters({ page: this.state.numberOfPageInAPI });
+  }
   render() {
-    const { characters } = this.props;
-    console.log("characters", characters);
+    const { characters, total, isLoading } = this.props;
+    console.log(`render ${this.id++}`);
+    console.log("props in CharacterCard", this.props);
+
     const columns = [
       {
+        align: "center",
         title: "IMF&STATUS",
-        dataIndex: "img",
+        dataIndex: "image",
         defaultSortOrder: "descend",
         sorter: (a, b) => {
           if (a.status > b.status) return 1;
           if (a.status < b.status) return -1;
           else return 0;
-        }
+        },
+        render: (image, character) => (
+          <div>
+            <Avatar size={100} icon="user" src={image}></Avatar>
+            <div>{character.status}</div>
+          </div>
+        )
       },
       {
         title: "NAME",
@@ -29,46 +49,77 @@ export default class CharacterCard extends Component {
       },
       {
         title: "RACE",
-        dataIndex: "race",
+        dataIndex: "species",
         defaultSortOrder: "descend",
         sorter: (a, b) => {
-          if (a.race > b.race) return 1;
-          if (a.race < b.race) return -1;
+          if (a.species > b.species) return 1;
+          if (a.species < b.species) return -1;
           else return 0;
         }
       },
       {
         dataIndex: "button1",
-        filterMultiple: false
+        filterMultiple: false,
+        render: (_, character) => (
+          <Button
+            type="dashed"
+            onClick={() => {
+              console.log("key", character.id);
+            }}
+          >
+            DETAILS
+          </Button>
+        )
       },
       {
         dataIndex: "button2",
-        filterMultiple: false
+        filterMultiple: false,
+        render: () => <Button type="dashed">EDIT</Button>
       }
     ];
 
-    const data = characters.map(character => {
-      console.log("characterInData", character);
-      return {
-        key: character.id,
-        img: (
-          <div>
-            <Avatar size={100} icon="user" src={character.image}></Avatar>
-            <div className="spanText">{character.status}</div>
-          </div>
-        ),
-        status: character.status,
-        name: character.name,
-        race: character.species,
-        button1: <Button type="dashed">DETAILS</Button>,
-        button2: <Button type="dashed">EDIT</Button>
-      };
-    });
+    const onChange = pagination => {
+      let numberOfElement = (pagination.current - 1) * pagination.pageSize;
+      let numberOfPageInAPI = Math.floor(numberOfElement / 20) + 1;
 
-    function onChange(pagination, filters, sorter, extra) {
-      console.log("params", pagination, filters, sorter, extra);
-    }
+      this.setState({
+        currentPage: pagination.current,
+        numberOfPageInAPI: numberOfPageInAPI,
+        pageSize: pagination.pageSize
+      });
 
-    return <Table columns={columns} dataSource={data} onChange={onChange} />;
+      this.props.getAllCharacters({ page: numberOfPageInAPI });
+    };
+
+    const currentCharacters = (characters, pageSize, currentPage) => {
+      currentPage -= 1;
+      currentPage = currentPage % (20 / pageSize);
+      console.log("___currentPage___", currentPage);
+      return characters.slice(
+        currentPage * pageSize,
+        (currentPage + 1) * pageSize
+      );
+    };
+
+    return (
+      <Table
+        pagination={{
+          defaultPageSize: this.state.pageSize,
+          showSizeChanger: true,
+          pageSizeOptions: ["5", "10", "20"],
+          total: total,
+          current: this.state.currentPage
+        }}
+        loading={isLoading}
+        rowKey={obj => obj.id}
+        columns={columns}
+        dataSource={currentCharacters(
+          characters,
+          this.state.pageSize,
+          this.state.currentPage
+        )}
+        onChange={onChange}
+      />
+    );
   }
 }
