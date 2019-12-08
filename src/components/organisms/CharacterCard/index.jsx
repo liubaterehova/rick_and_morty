@@ -4,15 +4,15 @@ import "./index.css";
 
 export default class CharacterCard extends Component {
   state = {
-    numberOfPageInAPI: 1,
+    currentPageInApi: 1,
     currentPage: 1,
     pageSize: 10
   };
 
   id = 1;
   componentDidMount() {
-    console.log("Moiunt Number Of Page  In Api", this.state.numberOfPageInAPI);
-    this.props.getAllCharacters({ page: this.state.numberOfPageInAPI });
+    console.log("Moiunt Number Of Page  In Api", this.state.currentPageInApi);
+    this.props.getAllCharacters({ page: this.state.currentPageInApi });
   }
   render() {
     const { characters, total, isLoading } = this.props;
@@ -80,15 +80,15 @@ export default class CharacterCard extends Component {
 
     const onChange = pagination => {
       let numberOfElement = (pagination.current - 1) * pagination.pageSize;
-      let numberOfPageInAPI = Math.floor(numberOfElement / 20) + 1;
+      let currentPageInApi = Math.floor(numberOfElement / 20) + 1;
 
       this.setState({
         currentPage: pagination.current,
-        numberOfPageInAPI: numberOfPageInAPI,
+        currentPageInApi: currentPageInApi,
         pageSize: pagination.pageSize
       });
 
-      this.props.getAllCharacters({ page: numberOfPageInAPI });
+      this.props.getAllCharacters({ page: currentPageInApi });
     };
 
     const currentCharacters = (characters, pageSize, currentPage) => {
