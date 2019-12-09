@@ -1,6 +1,6 @@
 import React from "react";
 
-const Template = ({ children }) => {
+const TemplatePersonalCard = ({ children }) => {
   return (
     <div
       className="template"
@@ -14,4 +14,4 @@ const Template = ({ children }) => {
     </div>
   );
 };
-export default Template;
+export default TemplatePersonalCard;

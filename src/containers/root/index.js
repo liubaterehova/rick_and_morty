@@ -5,6 +5,7 @@ import { ConnectedRouter } from "connected-react-router";
 
 import { connect } from "react-redux";
 import MainPage from "../ConnectMainPage";
+import PersonalCard from "../../components/organisms/PersonalCard";
 
 class Root extends Component {
   render() {
@@ -13,6 +14,7 @@ class Root extends Component {
       <ConnectedRouter history={history}>
         <Switch>
           <Route path="/main" component={MainPage} />{" "}
+          <Route path="/personalcard" component={PersonalCard} />{" "}
           <Route exact path="/" render={() => <Redirect to="/main" />} />{" "}
         </Switch>{" "}
       </ConnectedRouter>

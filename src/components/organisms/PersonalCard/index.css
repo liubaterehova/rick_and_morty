@@ -1,0 +1,17 @@
+.title {
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    justify-content: center;
+}
+
+.row {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.spanText {
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+}

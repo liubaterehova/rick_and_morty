@@ -1,30 +1,29 @@
 import React, { Component } from "react";
 import { Table, Avatar, Button } from "antd";
 import "./index.css";
+import { Link } from "react-router-dom";
 
 export default class CharacterCard extends Component {
   state = {
     currentPageInApi: 1,
     currentPage: 1,
-    pageSize: 10
+    pageSize: 10,
+    charactersInPage: [],
+    character: null
   };
 
   id = 1;
   componentDidMount() {
-    console.log("Moiunt Number Of Page  In Api", this.state.currentPageInApi);
     this.props.getAllCharacters({ page: this.state.currentPageInApi });
   }
   render() {
     const { characters, total, isLoading } = this.props;
-    console.log(`render ${this.id++}`);
-    console.log("props in CharacterCard", this.props);
-
     const columns = [
       {
         align: "center",
         title: "IMF&STATUS",
         dataIndex: "image",
-        defaultSortOrder: "descend",
+
         sorter: (a, b) => {
           if (a.status > b.status) return 1;
           if (a.status < b.status) return -1;
@@ -40,7 +39,7 @@ export default class CharacterCard extends Component {
       {
         title: "NAME",
         dataIndex: "name",
-        defaultSortOrder: "descend",
+
         sorter: (a, b) => {
           if (a.name > b.name) return 1;
           if (a.name < b.name) return -1;
@@ -50,7 +49,7 @@ export default class CharacterCard extends Component {
       {
         title: "RACE",
         dataIndex: "species",
-        defaultSortOrder: "descend",
+
         sorter: (a, b) => {
           if (a.species > b.species) return 1;
           if (a.species < b.species) return -1;
@@ -74,10 +73,24 @@ export default class CharacterCard extends Component {
       {
         dataIndex: "button2",
         filterMultiple: false,
-        render: () => <Button type="dashed">EDIT</Button>
+        render: (_, character) => (
+          <Button type="dashed" onClick={event => {}}>
+            <Link
+              to={{
+                pathname: "/personalcard",
+                state: {
+                  character: character
+                }
+              }}
+            >
+              {" "}
+              EDIT
+            </Link>
+          </Button>
+        )
       }
     ];
-
+    // const onEdit = id => {};
     const onChange = pagination => {
       let numberOfElement = (pagination.current - 1) * pagination.pageSize;
       let currentPageInApi = Math.floor(numberOfElement / 20) + 1;
@@ -95,10 +108,12 @@ export default class CharacterCard extends Component {
       currentPage -= 1;
       currentPage = currentPage % (20 / pageSize);
       console.log("___currentPage___", currentPage);
-      return characters.slice(
+      const arr = characters.slice(
         currentPage * pageSize,
         (currentPage + 1) * pageSize
       );
+      console.log("arrAfterSlice", arr);
+      return arr;
     };
 
     return (

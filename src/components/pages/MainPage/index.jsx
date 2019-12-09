@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import SearchPanel from "../../moleculas/SearchPanel";
 import ListCharacters from "../../organisms/ListCharacters";
-import Template from "../../Template";
+import TemplateMainPage from "../../Template/TemplateMainPage";
 
 export default class MainPage extends Component {
   render() {
     console.log("charactersinMainPAge", this.props.allCharacters);
     console.log("totalInMAinPAge", this.props.total);
     return (
-      <Template>
+      <TemplateMainPage>
         <SearchPanel />
         <ListCharacters
           characters={this.props.allCharacters}
@@ -17,7 +17,7 @@ export default class MainPage extends Component {
           getAllCharacters={this.props.getAllCharacters}
           isLoading={this.props.isLoading}
         />
-      </Template>
+      </TemplateMainPage>
     );
   }
 }
