@@ -5,8 +5,6 @@ import TemplateMainPage from "../../Template/TemplateMainPage";
 
 export default class MainPage extends Component {
   render() {
-    console.log("charactersinMainPAge", this.props.allCharacters);
-    console.log("totalInMAinPAge", this.props.total);
     return (
       <TemplateMainPage>
         <SearchPanel />
@@ -16,6 +14,7 @@ export default class MainPage extends Component {
           total={this.props.total}
           getAllCharacters={this.props.getAllCharacters}
           isLoading={this.props.isLoading}
+          changePersonalCard={this.props.changePersonalCard}
         />
       </TemplateMainPage>
     );

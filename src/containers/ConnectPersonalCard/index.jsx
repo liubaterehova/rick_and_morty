@@ -1,23 +1,20 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actions as customActions } from "../../store/custom";
-import MainPage from "../../components/pages/MainPage";
+import PersonalCard from "../../components/organisms/PersonalCard";
 
 const mapStateToProps = state => {
   return {
-    allCharacters: state.custom.allCharacters,
-    total: state.custom.total,
-    isLoading: state.custom.isLoading
+    personalCard: state.custom.personalCard
   };
 };
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getAllCharacters: customActions.getAllCharacters,
       changePersonalCard: customActions.changePersonalCard
     },
     dispatch
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+export default connect(mapStateToProps, mapDispatchToProps)(PersonalCard);

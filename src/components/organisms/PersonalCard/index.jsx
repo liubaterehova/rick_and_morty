@@ -2,16 +2,29 @@ import React, { Component } from "react";
 import { Card, Avatar, Row, Col, Button, Modal } from "antd";
 import "./index.css";
 
-const { Meta } = Card;
-
 export default class PersonalCard extends Component {
-  state = { visible: true };
+  state = {
+    visible: true,
+    planet: this.props.personalCard.origin.name,
+    gender: this.props.personalCard.gender,
+    species: this.props.personalCard.species,
+    status: this.props.personalCard.status,
+    id: this.props.personalCard.id
+  };
 
   handleOk = e => {
     console.log(e);
     this.setState({
       visible: false
     });
+    let obj = {
+      id: this.state.id,
+      planet: this.state.planet,
+      gender: this.state.gender,
+      species: this.state.species,
+      status: this.state.status
+    };
+    this.props.changePersonalCard(...this.props.personalCard, ...obj);
   };
 
   handleCancel = e => {
@@ -22,8 +35,9 @@ export default class PersonalCard extends Component {
   };
   render() {
     const { character } = this.props.location.state;
+
     const { name, status, species, image, type, gender } = character;
-    console.log("link", character);
+    console.log("character", character);
     return (
       <Modal
         visible={this.state.visible}
@@ -31,7 +45,7 @@ export default class PersonalCard extends Component {
         onCancel={this.handleCancel}
         width={600}
         footer={[
-          <Button key="cancel" onClick={this.handleCancel}>
+          <Button key="cancel" type="primary" onClick={this.handleCancel}>
             CANCEL
           </Button>,
           <Button key="ok" type="primary" onClick={this.handleOk}>
@@ -55,10 +69,46 @@ export default class PersonalCard extends Component {
             <div className="spanText">{status}</div>
           </Col>
           <Col span={6}>
-            <p>Race :{species}</p>
-            <p>Gender: {gender}</p>
-            <p>Species : {species}</p>
-            <p>Type : {type}</p>
+            <p className="pStyle">
+              <span> Planet</span> :
+              <input
+                className="input"
+                value={this.state.planet}
+                onChange={e => {
+                  this.setState({ ...this.state, planet: e.target.value });
+                }}
+              ></input>
+            </p>
+            <p className="pStyle">
+              Gender:{" "}
+              <input
+                className="input"
+                value={this.state.gender}
+                onChange={e => {
+                  this.setState({ ...this.state, gender: e.target.value });
+                }}
+              ></input>
+            </p>
+            <p className="pStyle">
+              Species{" "}
+              <input
+                className="input"
+                value={this.state.species}
+                onChange={e => {
+                  this.setState({ ...this.state, species: e.target.value });
+                }}
+              ></input>
+            </p>
+            {/* <p>
+              Type :{" "}
+              <input
+                className="input"
+                value={this.state.type}
+                onChange={e => {
+                  this.setState({ ...this.state, type: e.target.value });
+                }}
+              ></input>
+            </p> */}
           </Col>
         </Row>
 
