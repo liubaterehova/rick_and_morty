@@ -1,43 +1,42 @@
 import React, { Component } from "react";
-import { Card, Avatar, Row, Col, Button, Modal } from "antd";
+import { Avatar, Row, Col, Button, Modal } from "antd";
 import "./index.css";
 
 export default class PersonalCard extends Component {
-  state = {
-    visible: true,
-    planet: this.props.personalCard.origin.name,
-    gender: this.props.personalCard.gender,
-    species: this.props.personalCard.species,
-    status: this.props.personalCard.status,
-    id: this.props.personalCard.id
-  };
+  // state = {
+  //   visible: true,
+  //   // planet: this.props.character.origin.name,
+  //   gender: this.props.personalCard.gender,
+  //   species: this.props.personalCard.species,
+  //   status: this.props.personalCard.status,
+  //   id: this.props.personalCard.id
+  // };
 
-  handleOk = e => {
-    console.log(e);
-    this.setState({
-      visible: false
-    });
-    let obj = {
-      id: this.state.id,
-      planet: this.state.planet,
-      gender: this.state.gender,
-      species: this.state.species,
-      status: this.state.status
-    };
-    this.props.changePersonalCard(...this.props.personalCard, ...obj);
-  };
+  // handleOk = e => {
+  //   console.log(e);
+  //   this.setState({
+  //     visible: false
+  //   });
+  //   let obj = {
+  //     id: this.state.id,
+  //     planet: this.state.planet,
+  //     gender: this.state.gender,
+  //     species: this.state.species,
+  //     status: this.state.status
+  //   };
+  //   this.props.changePersonalCard(...this.props.personalCard, ...obj);
+  // };
 
-  handleCancel = e => {
-    console.log(e);
-    this.setState({
-      visible: false
-    });
-  };
+  // handleCancel = e => {
+  //   console.log(e);
+  //   this.setState({
+  //     visible: false
+  //   });
+  // };
   render() {
-    const { character } = this.props.location.state;
+    console.log("this.props", this.props);
+    console.log("state", this.state);
 
-    const { name, status, species, image, type, gender } = character;
-    console.log("character", character);
     return (
       <Modal
         visible={this.state.visible}
@@ -59,14 +58,20 @@ export default class PersonalCard extends Component {
         <Row type="flex" justify="space-around">
           <Col span={20}>
             {" "}
-            <h1 className="title">PERSONAL CARD {name}</h1>
+            <h1 className="title">
+              PERSONAL CARD {this.state.personalCard.name}
+            </h1>
           </Col>
           <Col span={1}> </Col>
         </Row>
         <Row type="flex" justify="space-around">
           <Col span={2}>
-            <Avatar size={100} icon="user" src={image} />
-            <div className="spanText">{status}</div>
+            <Avatar
+              size={100}
+              icon="user"
+              src={this.state.personalCard.image}
+            />
+            <div className="spanText">{this.state.personalCard.status}</div>
           </Col>
           <Col span={6}>
             <p className="pStyle">

@@ -1,5 +1,5 @@
 import MainPage from "../containers/ConnectMainPage";
-import PersonalCard from "../components/organisms/PersonalCard";
+import ConnectPersonalCard from "../containers/ConnectPersonalCard";
 export const customerRoutes = [{
         path: "/main",
         component: MainPage,
@@ -7,7 +7,7 @@ export const customerRoutes = [{
     },
     {
         path: "/personalcard",
-        component: PersonalCard,
+        component: ConnectPersonalCard,
         exact: true
     }
 ];

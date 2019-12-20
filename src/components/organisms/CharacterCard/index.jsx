@@ -16,8 +16,10 @@ export default class CharacterCard extends Component {
   componentDidMount() {
     this.props.getAllCharacters({ page: this.state.currentPageInApi });
   }
+
   render() {
-    const { characters, total, isLoading, changePersonalCard } = this.props;
+    const { characters, total, isLoading, addPersonalCard } = this.props;
+
     const columns = [
       {
         align: "center",
@@ -77,15 +79,17 @@ export default class CharacterCard extends Component {
           <Button
             type="dashed"
             onClick={event => {
-              changePersonalCard(character);
+              console.log("click");
+              console.log("character", character);
+              addPersonalCard(character);
             }}
           >
             <Link
               to={{
-                pathname: "/personalcard",
-                state: {
-                  character: character
-                }
+                pathname: "/personalcard"
+                // state: {
+                //   character: character
+                // }
               }}
             >
               {" "}

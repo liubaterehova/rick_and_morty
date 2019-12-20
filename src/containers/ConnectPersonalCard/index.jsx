@@ -4,6 +4,7 @@ import { actions as customActions } from "../../store/custom";
 import PersonalCard from "../../components/organisms/PersonalCard";
 
 const mapStateToProps = state => {
+  console.log("connect", state.custom.personalCard);
   return {
     personalCard: state.custom.personalCard
   };

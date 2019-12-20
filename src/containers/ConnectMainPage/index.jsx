@@ -15,7 +15,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getAllCharacters: customActions.getAllCharacters,
-      changePersonalCard: customActions.changePersonalCard
+      changePersonalCard: customActions.changePersonalCard,
+      addPersonalCard: customActions.addPersonalCard
     },
     dispatch
   );

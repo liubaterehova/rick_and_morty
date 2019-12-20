@@ -14,7 +14,7 @@ export default class MainPage extends Component {
           total={this.props.total}
           getAllCharacters={this.props.getAllCharacters}
           isLoading={this.props.isLoading}
-          changePersonalCard={this.props.changePersonalCard}
+          addPersonalCard={this.props.addPersonalCard}
         />
       </TemplateMainPage>
     );
