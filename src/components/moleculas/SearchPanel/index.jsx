@@ -11,7 +11,7 @@ export default class SearchPanel extends Component {
         placeholder="input search text"
         enterButton="Search"
         size="large"
-        onSearch={value => console.log(value)}
+        onSearch={value => this.props.changeSearchText(value)}
         style={{ width: "300px", margin: "30px" }}
       />
     );

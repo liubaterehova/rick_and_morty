@@ -1,77 +1,138 @@
 import React, { Component } from "react";
-import { Avatar, Row, Col, Button, Modal } from "antd";
+
+import { Avatar, Row, Col, Button, Modal, Menu, Dropdown, Icon } from "antd";
+
+import { history } from "../../../history";
 import "./index.css";
 
 export default class PersonalCard extends Component {
-  // state = {
-  //   visible: true,
-  //   // planet: this.props.character.origin.name,
-  //   gender: this.props.personalCard.gender,
-  //   species: this.props.personalCard.species,
-  //   status: this.props.personalCard.status,
-  //   id: this.props.personalCard.id
-  // };
+  state = {
+    visibleStatus: false,
+    visible: true,
+    planet: "",
+    gender: "",
+    species: "",
+    status: "",
+    name: ""
+  };
 
-  // handleOk = e => {
-  //   console.log(e);
-  //   this.setState({
-  //     visible: false
-  //   });
-  //   let obj = {
-  //     id: this.state.id,
-  //     planet: this.state.planet,
-  //     gender: this.state.gender,
-  //     species: this.state.species,
-  //     status: this.state.status
-  //   };
-  //   this.props.changePersonalCard(...this.props.personalCard, ...obj);
-  // };
+  componentDidMount() {
+    this.setState({
+      planet: this.props.personalCard.origin.name,
+      gender: this.props.personalCard.gender,
+      species: this.props.personalCard.species,
+      status: this.props.personalCard.status,
+      name: this.props.personalCard.name
+    });
+  }
 
-  // handleCancel = e => {
-  //   console.log(e);
-  //   this.setState({
-  //     visible: false
-  //   });
-  // };
+  handleOk = e => {
+    this.setState({
+      visible: false
+    });
+    let obj = {
+      name: this.state.name,
+      id: this.props.personalCard.id,
+      planet: this.state.planet,
+      gender: this.state.gender,
+      species: this.state.species,
+      status: this.state.status
+    };
+    this.props.changePersonalCard({ ...this.props.personalCard, ...obj });
+    history.push("/main");
+  };
+
+  handleCancel = e => {
+    this.setState({
+      visible: false
+    });
+    history.push("/main");
+  };
+
+  delete = () => {
+    this.props.deleteCharacter({ id: this.props.personalCard.id });
+    history.push("/main");
+  };
+
+  returnToDefault = e => {
+    this.setState({
+      ...this.props.oneCharacterById,
+      planet: this.props.oneCharacterById.origin.name
+    });
+  };
+
   render() {
-    console.log("this.props", this.props);
-    console.log("state", this.state);
+    const { image } = this.props.personalCard;
+    let key = 0;
+    const menu = (
+      <Menu>
+        {this.props.statuses.map(status => (
+          <Menu.Item
+            key={`${key++}`}
+            onClick={e => {
+              this.setState({
+                status: this.props.statuses[e.key],
+                visibleStatus: false
+              });
+            }}
+          >
+            {status}
+          </Menu.Item>
+        ))}
+      </Menu>
+    );
 
     return (
       <Modal
         visible={this.state.visible}
-        onOk={this.handleOk}
-        onCancel={this.handleCancel}
         width={600}
+        onCancel={this.handleCancel}
         footer={[
-          <Button key="cancel" type="primary" onClick={this.handleCancel}>
-            CANCEL
+          <Button key="cancel" type="primary" onClick={this.delete}>
+            DELETE
           </Button>,
           <Button key="ok" type="primary" onClick={this.handleOk}>
             OK
           </Button>,
-          <Button key="return" type="primary" onClick={this.handleOk}>
+          <Button key="return" type="primary" onClick={this.returnToDefault}>
             RETURN TO DEFAULT
           </Button>
         ]}
       >
         <Row type="flex" justify="space-around">
-          <Col span={20}>
+          <Col span={19}>
             {" "}
-            <h1 className="title">
-              PERSONAL CARD {this.state.personalCard.name}
-            </h1>
+            <h2 className="title">
+              PERSONAL CARD{" "}
+              <input
+                className="input"
+                value={this.state.name}
+                onChange={e => {
+                  this.setState({ ...this.state, name: e.target.value });
+                }}
+              ></input>
+            </h2>
           </Col>
-          <Col span={1}> </Col>
         </Row>
         <Row type="flex" justify="space-around">
           <Col span={2}>
-            <Avatar
-              size={100}
-              icon="user"
-              src={this.state.personalCard.image}
-            />
-            <div className="spanText">{this.state.personalCard.status}</div>
+            <Avatar size={100} icon="user" src={image} />
+            <div
+              className="spanText"
+              onClick={e => {
+                this.setState({ visibleStatus: !this.state.visibleStatus });
+              }}
+            >
+              <Dropdown
+                visible={this.state.visibleStatus}
+                overlay={menu}
+                trigger={["click"]}
+              >
+                <span className="ant-dropdown-link spanList" href="#">
+                  {this.state.status} <Icon type="down" />
+                </span>
+              </Dropdown>
+            </div>
           </Col>
           <Col span={6}>
             <p className="pStyle">
@@ -104,24 +165,8 @@ export default class PersonalCard extends Component {
                 }}
               ></input>
             </p>
-            {/* <p>
-              Type :{" "}
-              <input
-                className="input"
-                value={this.state.type}
-                onChange={e => {
-                  this.setState({ ...this.state, type: e.target.value });
-                }}
-              ></input>
-            </p> */}
           </Col>
         </Row>
-
-        {/* <Row type="flex" justify="center" className="row">
-          <Button>OK</Button>
-          <Button>CANCEL</Button>
-          <Button>RETURN TO DEFAULT</Button>
-        </Row> */}
       </Modal>
     );
   }

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import TemplatePersonalCard from "../../Template/TemplataPersonalCard";
-import PersonalCard from "../../organisms/PersonalCard";
+import PersonalCardConnected from "../../../containers/ConnectPersonalCard";
 export default class CharacterCard extends Component {
   render() {
     return (
       <TemplatePersonalCard>
-        <PersonalCard />
+        <PersonalCardConnected />
       </TemplatePersonalCard>
     );
   }

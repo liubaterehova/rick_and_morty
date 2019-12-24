@@ -9,6 +9,11 @@ const initialState = {
     isLoading: false,
     total: null,
     personalCard: null,
+    statuses: [],
+    searchText: "",
+    oneCharacterById: null,
+    isLoadingOnePerson: false
+        // oneEpisode: []
 };
 
 export const getAllCharacters = (state, { payload }) => ({
@@ -16,9 +21,18 @@ export const getAllCharacters = (state, { payload }) => ({
     isLoading: true
 });
 
+export const deleteCharacter = (state, { payload }) => {
+    let index = state.allCharacters.findIndex(
+        character => character.id === payload.id
+    );
+    let leftPart = [...state.allCharacters.splice(0, index)];
+    let rightPart = [...state.allCharacters.splice(index + 1)];
+    return {
+        ...state,
+        allCharacters: [...leftPart, ...rightPart]
+    };
+};
 export const getAllCharactersSuccess = (state, { payload }) => {
-    console.log("payload.characters");
-    console.log("total", payload.total);
     return {
         ...state,
         isLoading: false,
@@ -28,24 +42,65 @@ export const getAllCharactersSuccess = (state, { payload }) => {
 };
 
 export const addPersonalCard = (state, { payload }) => {
-    console.log('payloadAddCharacterCard', payload);
     return {
         ...state,
-        personalCard: payload,
-    }
-}
-
+        personalCard: payload
+    };
+};
+export const getStatuses = (state, { payload }) => {
+    const set = new Set();
+    state.allCharacters.map(character => set.add(character.status));
+    return {
+        ...state,
+        statuses: Array.from(set)
+    };
+};
 export const changePersonalCard = (state, { payload }) => {
-    console.log('payload', payload);
-    let index = state.allCharacters.findIndex((character) => character.id === payload.id)
+    let index = state.allCharacters.findIndex(
+        character => character.id === payload.id
+    );
     let leftPart = [...state.allCharacters.splice(0, index)];
     let rightPart = [...state.allCharacters.splice(index + 1)];
-    let arr = [...leftPart, payload, ...rightPart];
-    console.log('arrr', arr);
+
     return {
         ...state,
         allCharacters: [...leftPart, payload, ...rightPart]
-    }
-}
+    };
+};
 
+export const getOneCharacter = (state, { payload }) => {
+    return {
+        ...state,
+        isLoadingOnePerson: true
+    };
+};
+
+export const getOneCharacterSuccess = (state, { payload }) => {
+    return {
+        ...state,
+        isLoadingOnePerson: false,
+        oneCharacterById: payload.character
+    };
+};
+
+export const changeSearchText = (state, { payload }) => {
+    return {
+        ...state,
+        searchText: payload
+    };
+};
+
+// export const getEpisodeById = (state, { payload }) => {
+//     return {
+//         ...state
+//     };
+// };
+
+// export const getEpisodeByIdSuccess = (state, { payload }) => {
+//     console.log("episodeInHandlers", payload.episode);
+//     return {
+//         ...state,
+//         oneEpisode: payload.episode
+//     };
+// };
 export default initialState;

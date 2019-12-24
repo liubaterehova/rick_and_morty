@@ -7,7 +7,9 @@ const mapStateToProps = state => {
   return {
     allCharacters: state.custom.allCharacters,
     total: state.custom.total,
-    isLoading: state.custom.isLoading
+    isLoading: state.custom.isLoading,
+    searchText: state.custom.searchText,
+    oneCharacterById: state.custom.oneCharacterById
   };
 };
 
@@ -15,8 +17,10 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getAllCharacters: customActions.getAllCharacters,
-      changePersonalCard: customActions.changePersonalCard,
-      addPersonalCard: customActions.addPersonalCard
+      addPersonalCard: customActions.addPersonalCard,
+      getStatuses: customActions.getStatuses,
+      changeSearchText: customActions.changeSearchText,
+      getOneCharacter: customActions.getOneCharacter
     },
     dispatch
   );

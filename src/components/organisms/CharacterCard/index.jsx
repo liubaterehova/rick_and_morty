@@ -3,7 +3,7 @@ import { Table, Avatar, Button } from "antd";
 import "./index.css";
 import { Link } from "react-router-dom";
 
-export default class CharacterCard extends Component {
+export default class CharacterCards extends Component {
   state = {
     currentPageInApi: 1,
     currentPage: 1,
@@ -13,12 +13,23 @@ export default class CharacterCard extends Component {
   };
 
   id = 1;
-  componentDidMount() {
-    this.props.getAllCharacters({ page: this.state.currentPageInApi });
-  }
-
+  componentDidMount = () => {
+    if (!this.props.characters.length && !this.props.searchText) {
+      this.props.getAllCharacters({ page: this.state.currentPageInApi });
+    }
+  };
+  componentWillUnmount = () => {
+    this.props.getStatuses();
+  };
   render() {
-    const { characters, total, isLoading, addPersonalCard } = this.props;
+    const {
+      characters,
+      total,
+      isLoading,
+      addPersonalCard,
+      searchText,
+      getOneCharacter
+    } = this.props;
 
     const columns = [
       {
@@ -62,13 +73,15 @@ export default class CharacterCard extends Component {
         dataIndex: "button1",
         filterMultiple: false,
         render: (_, character) => (
-          <Button
-            type="dashed"
-            onClick={() => {
-              console.log("key", character.id);
-            }}
-          >
-            DETAILS
+          <Button type="dashed" onClick={() => {}}>
+            {" "}
+            <Link
+              to={{
+                pathname: `/details/${character.id}`
+              }}
+            >
+              DETAILS
+            </Link>
           </Button>
         )
       },
@@ -79,27 +92,22 @@ export default class CharacterCard extends Component {
           <Button
             type="dashed"
             onClick={event => {
-              console.log("click");
-              console.log("character", character);
               addPersonalCard(character);
+              getOneCharacter({ id: character.id });
             }}
           >
             <Link
               to={{
                 pathname: "/personalcard"
-                // state: {
-                //   character: character
-                // }
               }}
             >
-              {" "}
               EDIT
             </Link>
           </Button>
         )
       }
     ];
-    // const onEdit = id => {};
+
     const onChange = pagination => {
       let numberOfElement = (pagination.current - 1) * pagination.pageSize;
       let currentPageInApi = Math.floor(numberOfElement / 20) + 1;
@@ -116,12 +124,16 @@ export default class CharacterCard extends Component {
     const currentCharacters = (characters, pageSize, currentPage) => {
       currentPage -= 1;
       currentPage = currentPage % (20 / pageSize);
-      console.log("___currentPage___", currentPage);
       const arr = characters.slice(
         currentPage * pageSize,
         (currentPage + 1) * pageSize
       );
-      console.log("arrAfterSlice", arr);
+
+      if (searchText) {
+        return characters.filter(character =>
+          character.name.startsWith(searchText)
+        );
+      }
       return arr;
     };
 
@@ -134,6 +146,7 @@ export default class CharacterCard extends Component {
           total: total,
           current: this.state.currentPage
         }}
+        style={{ width: "700px" }}
         loading={isLoading}
         rowKey={obj => obj.id}
         columns={columns}

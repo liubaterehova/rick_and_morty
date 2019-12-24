@@ -7,6 +7,13 @@ export const actions = createActions({
     GET_ALL_CHARACTERS_SUCCESS: undefined,
     CHANGE_PERSONAL_CARD: undefined,
     ADD_PERSONAL_CARD: undefined,
+    GET_STATUSES: undefined,
+    CHANGE_SEARCH_TEXT: undefined,
+    GET_ONE_CHARACTER: undefined,
+    GET_ONE_CHARACTER_SUCCESS: undefined,
+    DELETE_CHARACTER: undefined
+        // GET_EPISODE_BY_ID: undefined,
+        // GET_EPISODE_BY_ID_SUCCESS: undefined
 });
 
 const reducer = handleActions(
@@ -15,6 +22,13 @@ const reducer = handleActions(
         [actions.getAllCharactersSuccess, handlers.getAllCharactersSuccess],
         [actions.changePersonalCard, handlers.changePersonalCard],
         [actions.addPersonalCard, handlers.addPersonalCard],
+        [actions.getStatuses, handlers.getStatuses],
+        [actions.changeSearchText, handlers.changeSearchText],
+        [actions.getOneCharacter, handlers.getOneCharacter],
+        [actions.getOneCharacterSuccess, handlers.getOneCharacterSuccess],
+        [actions.deleteCharacter, handlers.deleteCharacter]
+        // [actions.getEpisodeById, handlers.getEpisodeById],
+        // [actions.getEpisodeByIdSuccess, handlers.getEpisodeByIdSuccess]
     ]),
     initialState
 );

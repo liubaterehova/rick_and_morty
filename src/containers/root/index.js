@@ -1,22 +1,24 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
 import { Redirect } from "react-router";
+
 import { ConnectedRouter } from "connected-react-router";
-
 import { connect } from "react-redux";
-import MainPage from "../ConnectMainPage";
-import PersonalCard from "../../components/organisms/PersonalCard";
 
+import MainPage from "../ConnectMainPage";
+import PersonalCardConnected from "../../containers/ConnectPersonalCard";
+import ConnectDetails from "../../containers/ConnectDetails";
 class Root extends Component {
   render() {
     const { history } = this.props;
     return (
       <ConnectedRouter history={history}>
         <Switch>
-          <Route path="/main" component={MainPage} />{" "}
-          <Route path="/personalcard" component={PersonalCard} />{" "}
-          <Route exact path="/" render={() => <Redirect to="/main" />} />{" "}
-        </Switch>{" "}
+          <Route path="/main" component={MainPage} />
+          <Route path="/personalcard" component={PersonalCardConnected} />
+          <Route path="/details/:id" component={ConnectDetails} />
+          <Route exact path="/" render={() => <Redirect to="/main" />} />
+        </Switch>
       </ConnectedRouter>
     );
   }

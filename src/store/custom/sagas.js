@@ -7,11 +7,8 @@ function* getAllCharactersSaga({ payload }) {
         let response;
         const custom = makeApi().custom;
         response = yield call([custom, custom.getAllCharacters], payload.page);
-        console.log("response", response);
 
         if (response.data) {
-            console.log("response.data", response.data);
-            console.log("count", response.data.info.count);
             yield put(
                 types.getAllCharactersSuccess({
                     characters: response.data.results,
@@ -20,11 +17,52 @@ function* getAllCharactersSaga({ payload }) {
             );
         }
     } catch (error) {
-        console.log("errorInSaga");
         yield put(types.processFailure({ error }));
     }
 }
 
-const customSagas = [takeEvery(types.getAllCharacters, getAllCharactersSaga)];
+function* getOneCharacterSaga({ payload }) {
+    try {
+        let response;
+        const custom = makeApi().custom;
+        response = yield call([custom, custom.getOneCharacter], payload.id);
+
+        if (response.data) {
+            yield put(
+                types.getOneCharacterSuccess({
+                    character: response.data
+                })
+            );
+        }
+    } catch (error) {
+        yield put(types.processFailure({ error }));
+    }
+}
+
+// function* getEpisodeByIdSaga({ payload }) {
+//     try {
+//         let response;
+//         const custom = makeApi().custom;
+//         response = yield call([custom, custom.getEpisodeById], payload.id);
+
+//         if (response.data) {
+//             console.log("response.data", response.data);
+//             yield put(
+//                 types.getEpisodeByIdSuccess({
+//                     episode: response.data,
+//                     id: payload.id
+//                 })
+//             );
+//         }
+//     } catch (error) {
+//         console.log("errorInSgaGetEpisode");
+//         yield put(types.processFailure({ error }));
+//     }
+// }
+const customSagas = [
+    takeEvery(types.getAllCharacters, getAllCharactersSaga),
+    takeEvery(types.getOneCharacter, getOneCharacterSaga)
+    // takeEvery(types.getEpisodeById, getEpisodeByIdSaga)
+];
 
 export default customSagas;
