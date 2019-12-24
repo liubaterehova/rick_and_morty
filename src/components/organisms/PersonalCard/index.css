@@ -16,13 +16,24 @@
     justify-content: center;
 }
 
-.pStyle {
+
+/* .pStyle {
+    display: flex;
+} */
+
+.inputGroup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.inputRow {
     display: flex;
 }
 
 .input {
     margin-left: 10px;
-    border: 0;
 }
 
 .spanList {

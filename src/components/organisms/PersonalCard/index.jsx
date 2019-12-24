@@ -1,9 +1,20 @@
 import React, { Component } from "react";
 
-import { Avatar, Row, Col, Button, Modal, Menu, Dropdown, Icon } from "antd";
-
 import { history } from "../../../history";
 import "./index.css";
+
+import {
+  Avatar,
+  Row,
+  Col,
+  Button,
+  Modal,
+  Menu,
+  Dropdown,
+  Icon,
+  message,
+  Input
+} from "antd";
 
 export default class PersonalCard extends Component {
   state = {
@@ -27,9 +38,11 @@ export default class PersonalCard extends Component {
   }
 
   handleOk = e => {
+    this.success();
     this.setState({
       visible: false
     });
+
     let obj = {
       name: this.state.name,
       id: this.props.personalCard.id,
@@ -39,7 +52,15 @@ export default class PersonalCard extends Component {
       status: this.state.status
     };
     this.props.changePersonalCard({ ...this.props.personalCard, ...obj });
+
     history.push("/main");
+  };
+  success = () => {
+    message.success("You saved your changes", 3);
+  };
+
+  info = () => {
+    message.info("Character is deleted", 3);
   };
 
   handleCancel = e => {
@@ -51,6 +72,7 @@ export default class PersonalCard extends Component {
 
   delete = () => {
     this.props.deleteCharacter({ id: this.props.personalCard.id });
+    this.info();
     history.push("/main");
   };
 
@@ -64,6 +86,7 @@ export default class PersonalCard extends Component {
   render() {
     const { image } = this.props.personalCard;
     let key = 0;
+
     const menu = (
       <Menu>
         {this.props.statuses.map(status => (
@@ -99,23 +122,27 @@ export default class PersonalCard extends Component {
           </Button>
         ]}
       >
-        <Row type="flex" justify="space-around">
-          <Col span={19}>
-            {" "}
-            <h2 className="title">
-              PERSONAL CARD{" "}
-              <input
-                className="input"
-                value={this.state.name}
-                onChange={e => {
-                  this.setState({ ...this.state, name: e.target.value });
-                }}
-              ></input>
-            </h2>
-          </Col>
-        </Row>
-        <Row type="flex" justify="space-around">
-          <Col span={2}>
+        <h2>
+          <Row
+            type="flex"
+            justify="center"
+            style={{ alignItems: "center", marginBottom: "70px" }}
+          >
+            <div>PERSONAL CARD&nbsp;&nbsp; </div>
+            <input
+              value={this.state.name}
+              onChange={e => {
+                this.setState({ ...this.state, name: e.target.value });
+              }}
+            />
+          </Row>
+        </h2>
+        <Row
+          type="flex"
+          justify="space-around"
+          style={{ marginBottom: "30px" }}
+        >
+          <Col>
             <Avatar size={100} icon="user" src={image} />
             <div
               className="spanText"
@@ -134,37 +161,52 @@ export default class PersonalCard extends Component {
               </Dropdown>
             </div>
           </Col>
-          <Col span={6}>
-            <p className="pStyle">
-              <span> Planet</span> :
-              <input
-                className="input"
-                value={this.state.planet}
-                onChange={e => {
-                  this.setState({ ...this.state, planet: e.target.value });
-                }}
-              ></input>
-            </p>
-            <p className="pStyle">
-              Gender:{" "}
-              <input
-                className="input"
-                value={this.state.gender}
-                onChange={e => {
-                  this.setState({ ...this.state, gender: e.target.value });
-                }}
-              ></input>
-            </p>
-            <p className="pStyle">
-              Species{" "}
-              <input
-                className="input"
-                value={this.state.species}
-                onChange={e => {
-                  this.setState({ ...this.state, species: e.target.value });
-                }}
-              ></input>
-            </p>
+
+          <Col>
+            <Row gutter={[0, 8]}>
+              <Col span={8}>
+                <div className="pStyle">Planet:</div>
+              </Col>
+              <Col span={16}>
+                <Input
+                  className="input"
+                  value={this.state.planet}
+                  onChange={e => {
+                    this.setState({ ...this.state, planet: e.target.value });
+                  }}
+                ></Input>
+              </Col>
+            </Row>
+
+            <Row gutter={[0, 8]}>
+              <Col span={8}>
+                <div className="pStyle">Gender: </div>
+              </Col>
+              <Col span={16}>
+                <Input
+                  className="input"
+                  value={this.state.gender}
+                  onChange={e => {
+                    this.setState({ ...this.state, gender: e.target.value });
+                  }}
+                ></Input>
+              </Col>
+            </Row>
+
+            <Row gutter={[0, 8]}>
+              <Col span={8}>
+                <div className="pStyle">Species: </div>
+              </Col>
+              <Col span={16}>
+                <Input
+                  className="input"
+                  value={this.state.species}
+                  onChange={e => {
+                    this.setState({ ...this.state, species: e.target.value });
+                  }}
+                ></Input>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Modal>

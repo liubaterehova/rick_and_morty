@@ -21,7 +21,8 @@ export default class Details extends Component {
   };
 
   render() {
-    if (!this.props.oneCharacterById) return <Spin />;
+    if (!this.props.oneCharacterById || this.props.isLoadingOnePerson)
+      return <Spin size="large" tip="Loading..." />;
     console.log("propsDetails", this.props);
     const { episodes, oneCharacterById } = this.props;
     const { name, status, species, image, origin, episode } = oneCharacterById;

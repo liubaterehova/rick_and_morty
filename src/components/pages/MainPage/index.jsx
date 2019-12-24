@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import SearchPanel from "../../moleculas/SearchPanel";
-import CharacterCards from "../../organisms/CharacterCard";
+import CharacterCards from "../../organisms/CharacterCards";
 import TemplateMainPage from "../../Template/TemplateMainPage";
 
 export default class MainPage extends Component {

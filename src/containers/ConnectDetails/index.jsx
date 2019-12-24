@@ -7,7 +7,8 @@ import Details from "../../components/organisms/Details";
 const mapStateToProps = state => {
   return {
     oneCharacterById: state.custom.oneCharacterById,
-    episodes: state.episodes
+    episodes: state.episodes,
+    isLoadingOnePerson: state.custom.isLoadingOnePerson
   };
 };
 
