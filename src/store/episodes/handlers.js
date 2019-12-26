@@ -1,9 +1,11 @@
 const initialState = {
     episodes: {},
-    characterNames: {}
+    characterNames: {},
+    error: null,
 };
 
 export const getEpisodeById = (state, { payload }) => {
+    console.log('payloadEpisodeById', payload)
     return {
         ...state,
         episodes: {...state.episodes,
@@ -11,7 +13,6 @@ export const getEpisodeById = (state, { payload }) => {
         }
     }
 };
-
 export const getEpisodeByIdSuccess = (state, { payload }) => {
     console.log('payloadEpisode', payload);
     return {
@@ -21,7 +22,18 @@ export const getEpisodeByIdSuccess = (state, { payload }) => {
         }
     }
 };
+
+export const processFailure = (state, { payload }) => {
+    console.log('processFailure', payload)
+    return {
+        ...state,
+        error: payload
+    }
+};
+
+
 export const getCharacterName = (state, { payload }) => {
+    console.log('characterNamePayload', payload)
     return {
         ...state,
         characterNames: {...state.characterNames,
@@ -31,7 +43,7 @@ export const getCharacterName = (state, { payload }) => {
 };
 
 export const getCharacterNameSuccess = (state, { payload }) => {
-    console.log('payloadInChararcterName')
+    console.log('payloadInChararcterNameSuccess', payload)
     return {
         ...state,
         characterNames: {...state.characterNames,

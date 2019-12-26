@@ -9,7 +9,7 @@ function* getEpisodeByIdSaga({ payload }) {
         response = yield call([custom, custom.getEpisodeById], payload.id);
 
         if (response.data) {
-            console.log("response.data", response.data);
+
             yield put(
                 types.getEpisodeByIdSuccess({
                     episode: response.data,
@@ -18,7 +18,7 @@ function* getEpisodeByIdSaga({ payload }) {
             );
         }
     } catch (error) {
-        console.log("errorInSgaGetEpisode");
+        console.log("errorInSagaGetEpisode");
         yield put(types.processFailure({ error }));
     }
 }
@@ -28,8 +28,9 @@ function* getCharacterNameSaga({ payload }) {
         let response;
         const custom = makeApi().custom;
         response = yield call([custom, custom.getCharacterName], payload.id);
-
+        console.log('responeInCharacterName', response)
         if (response.data) {
+            console.log('response.dataInCharacterName', response.data)
             yield put(
                 types.getCharacterNameSuccess({
                     name: response.data.name,

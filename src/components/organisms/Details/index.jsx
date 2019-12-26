@@ -1,4 +1,5 @@
 import "./index.css";
+import EpisodeMenu from "../EpisodeMenu";
 import React, { Component } from "react";
 
 import { Avatar, Collapse, Spin, Icon, Menu, Dropdown } from "antd";
@@ -23,58 +24,59 @@ export default class Details extends Component {
   render() {
     if (!this.props.oneCharacterById || this.props.isLoadingOnePerson)
       return <Spin size="large" tip="Loading..." />;
-    console.log("propsInDetailsInStart", this.props);
+
     const { episodes, oneCharacterById } = this.props;
     const { name, status, species, image, origin, episode } = oneCharacterById;
 
-    const getEpisodeIdFromURL = str => {
-      const splited = str.split("/");
-      const episodeNumber = splited[splited.length - 1];
-      return episodeNumber;
-    };
-    const makeMenu = characters => {
-      return (
-        <Menu>
-          {characters.map(character => {
-            let id = getEpisodeIdFromURL(character);
-            this.props.getCharacterName({ id: id });
-            return !this.props.characterNames[id] ||
-              this.props.characterNames[id].isLoadingCharacterName ? (
-              <Spin />
-            ) : (
-              <Menu.Item key={character}>
-                <Link
-                  to={{
-                    pathname: `/details/${id}`
-                  }}
-                >
-                  {character}
-                </Link>
-              </Menu.Item>
-            );
-          })}
-        </Menu>
-      );
-    };
+    // const getEpisodeIdFromURL = str => {
+    //   const splited = str.split("/");
+    //   const episodeNumber = splited[splited.length - 1];
+    //   return episodeNumber;
+    // };
+    // const makeMenu = characters => {
+    //   return (
+    // <Menu>
+    //   {characters.map(character => {
+    //     let id = getEpisodeIdFromURL(character);
+    //     this.props.getCharacterName({ id: id });
+    //     // return !this.props.characterNames[id] ||
+    //     //   this.props.characterNames[id].isLoadingCharacterName ? (
+    //     //   <Spin />
+    //     // ) : (
+    //     return (
+    //       <Menu.Item key={character}>
+    //         <Link
+    //           to={{
+    //             pathname: `/details/${id}`
+    //           }}
+    //         >
+    //           {character}
+    //         </Link>
+    //       </Menu.Item>
+    //     );
+    //   })}
+    // </Menu>
+    //   );
+    // };
 
-    const genExtra = episode =>
-      episode && !episode.isLoading ? (
-        <Dropdown overlay={makeMenu(episode.characters)}>
-          <Icon type="user" />
-        </Dropdown>
-      ) : (
-        <Icon type="frown" />
-      );
+    // const genExtra = episode =>
+    //   episode && !episode.isLoading ? (
+    //     <Dropdown overlay={makeMenu(episode.characters)}>
+    //       <Icon type="user" />
+    //     </Dropdown>
+    //   ) : (
+    //     <Icon type="frown" />
+    //   );
 
-    const callbackKey = key => {
-      if (key.length === 0) return;
-      let episode = key[key.length - 1];
-      const episodeNumber = getEpisodeIdFromURL(episode);
-      if (episodes[episodeNumber]) {
-        return;
-      }
-      this.props.getEpisodeById({ id: episodeNumber });
-    };
+    // const callbackKey = key => {
+    //   if (key.length === 0) return;
+    //   let episode = key[key.length - 1];
+    //   const episodeNumber = getEpisodeIdFromURL(episode);
+    //   if (episodes[episodeNumber]) {
+    //     return;
+    //   }
+    //   this.props.getEpisodeById({ id: episodeNumber });
+    // };
 
     return (
       <div className="container">
@@ -85,7 +87,12 @@ export default class Details extends Component {
         <h2> {status}</h2>
         <h2>{origin.name}</h2>
         <h3 style={{ margin: "16px 0" }}>Список эпизодов персонажа</h3>
-        <Collapse onChange={callbackKey} className="collapse">
+        <EpisodeMenu
+          episodesURL={episode}
+          episodesfromAPI={episodes}
+          getEpisodeById={this.props.getEpisodeById}
+        />
+        {/* <Collapse onChange={callbackKey} className="collapse">
           {episode.map(ep => {
             const id = getEpisodeIdFromURL(ep);
 
@@ -102,7 +109,7 @@ export default class Details extends Component {
               </Panel>
             );
           })}
-        </Collapse>
+        </Collapse> */}
       </div>
     );
   }
