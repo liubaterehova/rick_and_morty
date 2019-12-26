@@ -32,7 +32,8 @@ function* getCharacterNameSaga({ payload }) {
         if (response.data) {
             yield put(
                 types.getCharacterNameSuccess({
-                    name: response.data.name
+                    name: response.data.name,
+                    id: payload.id
                 })
             );
         }

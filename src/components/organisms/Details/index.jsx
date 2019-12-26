@@ -37,12 +37,11 @@ export default class Details extends Component {
         <Menu>
           {characters.map(character => {
             let id = getEpisodeIdFromURL(character);
-            // let nameOfCharacter = this.props.getCharacterName({
-            //   id: id
-            // });
-            // (this.props.characterNames
-
-            return (
+            this.props.getCharacterName({ id: id });
+            return !this.props.characterNames[id] ||
+              this.props.characterNames[id].isLoadingCharacterName ? (
+              <Spin />
+            ) : (
               <Menu.Item key={character}>
                 <Link
                   to={{

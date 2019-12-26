@@ -6,33 +6,38 @@ const initialState = {
 export const getEpisodeById = (state, { payload }) => {
     return {
         ...state,
-        ...state.episodes,
-        [payload.id]: { isLoading: true }
-    };
+        episodes: {...state.episodes,
+            [payload.id]: {...state.episodes[payload.id], isLoading: true },
+        }
+    }
 };
 
 export const getEpisodeByIdSuccess = (state, { payload }) => {
     console.log('payloadEpisode', payload);
     return {
         ...state,
-        ...state.episodes,
-        [payload.id]: {...state.episodes[payload.id], isLoading: false, ...payload.episode }
-    };
+        episodes: {...state.episodes,
+            [payload.id]: {...state.episodes[payload.id], isLoading: false, ...payload.episode }
+        }
+    }
 };
 export const getCharacterName = (state, { payload }) => {
     return {
         ...state,
-        ...state.characterNames,
-        isLoadingCharacterName: true
+        characterNames: {...state.characterNames,
+            [payload.id]: {...state.characterNames[payload.id], isLoadingCharacterName: true },
+        }
     };
 };
 
 export const getCharacterNameSuccess = (state, { payload }) => {
+    console.log('payloadInChararcterName')
     return {
         ...state,
-        ...state.characterNames,
-        [payload.id]: {...state.characterNames[payload.id], isLoadingCharacterName: false, name: payload.name }
-    };
+        characterNames: {...state.characterNames,
+            [payload.id]: {...state.characterNames[payload.id], isLoadingCharacterName: false, name: payload.name }
+        }
+    }
 };
 
 export default initialState;
