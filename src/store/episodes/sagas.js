@@ -27,6 +27,7 @@ function* getCharacterNameSaga({ payload }) {
     try {
         let response;
         const custom = makeApi().custom;
+        console.log('getChararcterSaga')
         response = yield call([custom, custom.getCharacterName], payload.id);
         console.log('responeInCharacterName', response)
         if (response.data) {

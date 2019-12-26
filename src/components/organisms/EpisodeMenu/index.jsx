@@ -6,7 +6,13 @@ const { Panel } = Collapse;
 
 export default class EpisodeMenu extends Component {
   render() {
-    const { episodesURL, episodesfromAPI, getEpisodeById } = this.props;
+    const {
+      episodesURL,
+      episodesfromAPI,
+      getEpisodeById,
+      characterNames,
+      getCharacterName
+    } = this.props;
 
     const getEpisodeIdFromURL = str => {
       const splited = str.split("/");
@@ -30,7 +36,7 @@ export default class EpisodeMenu extends Component {
       if (episodesfromAPI[episodeNumber]) {
         return;
       }
-      this.props.getEpisodeById({ id: episodeNumber });
+      getEpisodeById({ id: episodeNumber });
     };
 
     const makeMenu = characters => {
@@ -38,19 +44,19 @@ export default class EpisodeMenu extends Component {
         <Menu>
           {characters.map(character => {
             let id = getEpisodeIdFromURL(character);
-            //   this.props.getCharacterName({ id: id });
-            // return !this.props.characterNames[id] ||
-            //   this.props.characterNames[id].isLoadingCharacterName ? (
-            //   <Spin />
-            // ) : (
-            return (
-              <Menu.Item key={character}>
+            console.log("id in EpisodeMenu", id);
+            getCharacterName({ id: id });
+
+            return characterNames[id].isLoadingCharacterName ? (
+              <Spin />
+            ) : (
+              <Menu.Item key={characterNames[id]}>
                 <Link
                   to={{
                     pathname: `/details/${id}`
                   }}
                 >
-                  {character}
+                  {this.props.characterNames[id]}
                 </Link>
               </Menu.Item>
             );
