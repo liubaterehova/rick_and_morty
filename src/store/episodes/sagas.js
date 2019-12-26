@@ -22,6 +22,27 @@ function* getEpisodeByIdSaga({ payload }) {
         yield put(types.processFailure({ error }));
     }
 }
-const episodesSagas = [takeEvery(types.getEpisodeById, getEpisodeByIdSaga)];
+
+function* getCharacterNameSaga({ payload }) {
+    try {
+        let response;
+        const custom = makeApi().custom;
+        response = yield call([custom, custom.getCharacterName], payload.id);
+
+        if (response.data) {
+            yield put(
+                types.getCharacterNameSuccess({
+                    name: response.data.name
+                })
+            );
+        }
+    } catch (error) {
+        yield put(types.processFailure({ error }));
+    }
+}
+const episodesSagas = [
+    takeEvery(types.getEpisodeById, getEpisodeByIdSaga),
+    takeEvery(types.getCharacterName, getCharacterNameSaga),
+];
 
 export default episodesSagas;

@@ -39,26 +39,8 @@ function* getOneCharacterSaga({ payload }) {
     }
 }
 
-// function* getEpisodeByIdSaga({ payload }) {
-//     try {
-//         let response;
-//         const custom = makeApi().custom;
-//         response = yield call([custom, custom.getEpisodeById], payload.id);
 
-//         if (response.data) {
-//             console.log("response.data", response.data);
-//             yield put(
-//                 types.getEpisodeByIdSuccess({
-//                     episode: response.data,
-//                     id: payload.id
-//                 })
-//             );
-//         }
-//     } catch (error) {
-//         console.log("errorInSgaGetEpisode");
-//         yield put(types.processFailure({ error }));
-//     }
-// }
+
 const customSagas = [
     takeEvery(types.getAllCharacters, getAllCharactersSaga),
     takeEvery(types.getOneCharacter, getOneCharacterSaga)

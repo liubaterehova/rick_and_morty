@@ -7,8 +7,9 @@ import Details from "../../components/organisms/Details";
 const mapStateToProps = state => {
   return {
     oneCharacterById: state.custom.oneCharacterById,
-    episodes: state.episodes,
-    isLoadingOnePerson: state.custom.isLoadingOnePerson
+    episodes: state.episodes.episodes,
+    isLoadingOnePerson: state.custom.isLoadingOnePerson,
+    characterNames: state.episodes.characterNames
   };
 };
 
@@ -16,7 +17,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getOneCharacter: customActions.getOneCharacter,
-      getEpisodeById: episodesActions.getEpisodeById
+      getEpisodeById: episodesActions.getEpisodeById,
+      getCharacterName: episodesActions.getCharacterName
     },
     dispatch
   );

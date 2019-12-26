@@ -131,7 +131,7 @@ export default class CharacterCards extends Component {
 
       if (searchText) {
         return characters.filter(character =>
-          character.name.startsWith(searchText)
+          character.name.includes(searchText)
         );
       }
       return arr;
