@@ -1,69 +1,67 @@
 import React, { Component } from "react";
 import { Avatar, Collapse, Spin, Icon, Menu, Dropdown } from "antd";
 import { Link } from "react-router-dom";
-
+import CharacterNames from "../CharacterNames";
+import { bindActionCreators } from "redux";
 const { Panel } = Collapse;
-
+///// вынести <menu> и ovwrlay в отдельный класс
 export default class EpisodeMenu extends Component {
   render() {
+    console.log("this.props in Episode Menu", this.props);
     const {
       episodesURL,
       episodesfromAPI,
       getEpisodeById,
       characterNames,
-      getCharacterName
+      getCharacterNames,
+      isLoadingСharacterNames
     } = this.props;
 
     const getEpisodeIdFromURL = str => {
       const splited = str.split("/");
       const episodeNumber = splited[splited.length - 1];
-      return episodeNumber;
+      return Number.parseInt(episodeNumber);
+    };
+
+    const getArrOdIDFromArrOfChararcters = characters => {
+      let arr = characters.map(character => {
+        return getEpisodeIdFromURL(character);
+      });
+      console.log("arrOfIdsNamesInEpisodeMenu", arr);
+      return arr;
     };
 
     const genExtra = episode =>
       episode && !episode.isLoading ? (
-        <Dropdown overlay={makeMenu(episode.characters)}>
+        <Dropdown
+          trigger={["hover"]}
+          overlay={
+            <CharacterNames
+              charactersID={getArrOdIDFromArrOfChararcters(episode.characters)}
+              getCharacterNames={getCharacterNames}
+              isLoadingСharacterNames={isLoadingСharacterNames}
+              characterNames={characterNames}
+            />
+          }
+        >
           <Icon type="user" />
         </Dropdown>
-      ) : (
-        <Icon type="frown" />
-      );
+      ) : null;
 
     const callbackKey = key => {
-      if (key.length === 0) return;
-      let episode = key[key.length - 1];
+      if (key.length === 0) {
+        return;
+      }
+
+      const episode = key[key.length - 1];
       const episodeNumber = getEpisodeIdFromURL(episode);
       if (episodesfromAPI[episodeNumber]) {
         return;
       }
+
       getEpisodeById({ id: episodeNumber });
     };
 
-    const makeMenu = characters => {
-      return (
-        <Menu>
-          {characters.map(character => {
-            let id = getEpisodeIdFromURL(character);
-            console.log("id in EpisodeMenu", id);
-            getCharacterName({ id: id });
-
-            return characterNames[id].isLoadingCharacterName ? (
-              <Spin />
-            ) : (
-              <Menu.Item key={characterNames[id]}>
-                <Link
-                  to={{
-                    pathname: `/details/${id}`
-                  }}
-                >
-                  {this.props.characterNames[id]}
-                </Link>
-              </Menu.Item>
-            );
-          })}
-        </Menu>
-      );
-    };
     return (
       <Collapse onChange={callbackKey} className="collapse">
         {episodesURL.map(ep => {

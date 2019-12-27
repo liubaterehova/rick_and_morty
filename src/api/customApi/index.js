@@ -16,9 +16,10 @@ const makeCustomApi = ({ client, headersManager }) => ({
     getEpisodeById: async id => {
         return await http.get(`${BASE_EPISODE_URL}${id}`);
     },
-    getCharacterName: async id => {
-        return await http.get(`${BASE_ONE_CHARACTER_URL}${id}`);
-    },
+    getCharacterNames: async arrOfNamesID => {
+        console.log("arr in makeCustomApiGetCharacterNames", arrOfNamesID);
+        return await http.get(`${BASE_ONE_CHARACTER_URL}${arrOfNamesID}`);
+    }
 });
 
 export default makeCustomApi;

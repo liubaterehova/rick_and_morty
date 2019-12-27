@@ -92,7 +92,8 @@ export default class Details extends Component {
           episodesfromAPI={episodes}
           getEpisodeById={this.props.getEpisodeById}
           characterNames={this.props.characterNames}
-          getCharacterName={this.props.getCharacterName}
+          getCharacterNames={this.props.getCharacterNames}
+          isLoadingСharacterNames={this.props.isLoadingСharacterNames}
         />
         {/* <Collapse onChange={callbackKey} className="collapse">
           {episode.map(ep => {

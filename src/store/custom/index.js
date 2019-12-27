@@ -12,8 +12,6 @@ export const actions = createActions({
     GET_ONE_CHARACTER: undefined,
     GET_ONE_CHARACTER_SUCCESS: undefined,
     DELETE_CHARACTER: undefined
-        // GET_EPISODE_BY_ID: undefined,
-        // GET_EPISODE_BY_ID_SUCCESS: undefined
 });
 
 const reducer = handleActions(
@@ -27,8 +25,6 @@ const reducer = handleActions(
         [actions.getOneCharacter, handlers.getOneCharacter],
         [actions.getOneCharacterSuccess, handlers.getOneCharacterSuccess],
         [actions.deleteCharacter, handlers.deleteCharacter]
-        // [actions.getEpisodeById, handlers.getEpisodeById],
-        // [actions.getEpisodeByIdSuccess, handlers.getEpisodeByIdSuccess]
     ]),
     initialState
 );

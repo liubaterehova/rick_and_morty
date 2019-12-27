@@ -9,7 +9,8 @@ const mapStateToProps = state => {
     oneCharacterById: state.custom.oneCharacterById,
     episodes: state.episodes.episodes,
     isLoadingOnePerson: state.custom.isLoadingOnePerson,
-    characterNames: state.episodes.characterNames
+    characterNames: state.episodes.characterNames,
+    isLoadingСharacterNames: state.episodes.isLoadingСharacterNames
   };
 };
 
@@ -18,7 +19,7 @@ const mapDispatchToProps = dispatch =>
     {
       getOneCharacter: customActions.getOneCharacter,
       getEpisodeById: episodesActions.getEpisodeById,
-      getCharacterName: episodesActions.getCharacterName
+      getCharacterNames: episodesActions.getCharacterNames
     },
     dispatch
   );
