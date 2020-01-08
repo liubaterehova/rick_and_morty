@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import { history } from "../../../history";
 import "./index.css";
+import { withTranslation } from "react-i18next";
+import { Redirect } from "react-router-dom";
 
 import {
   Avatar,
@@ -16,7 +18,7 @@ import {
   Input
 } from "antd";
 
-export default class PersonalCard extends Component {
+class PersonalCard extends Component {
   state = {
     visibleStatus: false,
     visible: true,
@@ -28,11 +30,16 @@ export default class PersonalCard extends Component {
   };
 
   componentDidMount() {
+    if (!this.props.personalCard) return;
     this.setState({
       planet: this.props.personalCard.origin.name,
       gender: this.props.personalCard.gender,
-      species: this.props.personalCard.species,
-      status: this.props.personalCard.status,
+      species: this.props.t("common:race", {
+        context: `${this.props.personalCard.species}`
+      }),
+      status: this.props.t("common:statusUnderPic", {
+        context: `${this.props.personalCard.status}`
+      }),
       name: this.props.personalCard.name
     });
   }
@@ -56,11 +63,11 @@ export default class PersonalCard extends Component {
     history.push("/main");
   };
   success = () => {
-    message.success("You saved your changes", 3);
+    message.success(this.props.t("common:messages.success"), 3);
   };
 
   info = () => {
-    message.info("Character is deleted", 3);
+    message.info(this.props.t("common:messages.delete"), 3);
   };
 
   handleCancel = e => {
@@ -84,7 +91,19 @@ export default class PersonalCard extends Component {
   };
 
   render() {
+    const { t } = this.props;
+
+    if (!this.props.personalCard) {
+      return (
+        <Redirect
+          to={{
+            pathname: `/main`
+          }}
+        ></Redirect>
+      );
+    }
     const { image } = this.props.personalCard;
+
     let key = 0;
 
     const menu = (
@@ -94,12 +113,14 @@ export default class PersonalCard extends Component {
             key={`${key++}`}
             onClick={e => {
               this.setState({
-                status: this.props.statuses[e.key],
+                status: t("common:statusUnderPic", {
+                  context: `${this.props.statuses[e.key]}`
+                }),
                 visibleStatus: false
               });
             }}
           >
-            {status}
+            {t("common:statusUnderPic", { context: `${status}` })}
           </Menu.Item>
         ))}
       </Menu>
@@ -112,13 +133,13 @@ export default class PersonalCard extends Component {
         onCancel={this.handleCancel}
         footer={[
           <Button key="cancel" type="primary" onClick={this.delete}>
-            DELETE
+            {t("common:buttons.delete")}
           </Button>,
           <Button key="ok" type="primary" onClick={this.handleOk}>
             OK
           </Button>,
           <Button key="return" type="primary" onClick={this.returnToDefault}>
-            RETURN TO DEFAULT
+            {t("common:buttons.returnToDefault")}
           </Button>
         ]}
       >
@@ -128,7 +149,7 @@ export default class PersonalCard extends Component {
             justify="center"
             style={{ alignItems: "center", marginBottom: "70px" }}
           >
-            <div>PERSONAL CARD&nbsp;&nbsp; </div>
+            <div>{t("common:titlePersonalCard")}&nbsp;&nbsp; </div>
             <input
               value={this.state.name}
               onChange={e => {
@@ -165,7 +186,7 @@ export default class PersonalCard extends Component {
           <Col>
             <Row gutter={[0, 8]}>
               <Col span={8}>
-                <div className="pStyle">Planet:</div>
+                <div className="pStyle">{t("common:planet")}:</div>
               </Col>
               <Col span={16}>
                 <Input
@@ -180,7 +201,7 @@ export default class PersonalCard extends Component {
 
             <Row gutter={[0, 8]}>
               <Col span={8}>
-                <div className="pStyle">Gender: </div>
+                <div className="pStyle">{t("common:gender")}: </div>
               </Col>
               <Col span={16}>
                 <Input
@@ -195,7 +216,7 @@ export default class PersonalCard extends Component {
 
             <Row gutter={[0, 8]}>
               <Col span={8}>
-                <div className="pStyle">Species: </div>
+                <div className="pStyle">{t("common:species")}: </div>
               </Col>
               <Col span={16}>
                 <Input
@@ -213,3 +234,5 @@ export default class PersonalCard extends Component {
     );
   }
 }
+
+export default withTranslation()(PersonalCard);

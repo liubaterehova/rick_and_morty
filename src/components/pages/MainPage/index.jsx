@@ -2,11 +2,25 @@ import React, { Component } from "react";
 import SearchPanel from "../../moleculas/SearchPanel";
 import CharacterCards from "../../organisms/CharacterCards";
 import TemplateMainPage from "../../Template/TemplateMainPage";
+import { Button } from "antd";
+import { withTranslation } from "react-i18next";
 
-export default class MainPage extends Component {
+class MainPage extends Component {
   render() {
     return (
       <TemplateMainPage>
+        <Button
+          size="large"
+          onClick={() => this.props.i18n.changeLanguage("ru")}
+        >
+          ru
+        </Button>
+        <Button
+          size="large"
+          onClick={() => this.props.i18n.changeLanguage("en")}
+        >
+          en
+        </Button>
         <SearchPanel changeSearchText={this.props.changeSearchText} />
         <CharacterCards
           characters={this.props.allCharacters}
@@ -23,3 +37,4 @@ export default class MainPage extends Component {
     );
   }
 }
+export default withTranslation()(MainPage);

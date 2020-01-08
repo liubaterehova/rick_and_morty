@@ -1,9 +1,17 @@
 {
-    "title": "hhhhhhhhhhh zu react und react-i18next",
+    "titlePersonalCard": "PERSONAL CARD",
     "buttons": {
         "details": "DETAILS",
-        "edit": "EDIT"
+        "edit": "EDIT",
+        "back": "RETURN",
+        "delete": "DELETE",
+        "ok": "OK",
+        "returnToDefault": "RETURN TO DEFAULT"
 
+    },
+    "messages": {
+        "delete": "Character is deleted",
+        "success": "You saved your changes"
     },
     "headersInChararcterPage": {
         "firstTitle": "IMF&STATUS",
@@ -16,5 +24,12 @@
     "statusUnderPic_Dead": "Dead",
     "race": "{{context}}",
     "race_Human": "Human",
-    "race_Alien": "Alien"
+    "race_Alien": "Alien",
+    "searchTextPlaceholder": "input search text",
+    "searchTextButton": "Search",
+    "detailPageHeader": "Detail character's page",
+    "episodeList": "Character episode list",
+    "planet": "Planet",
+    "gender": "Gender",
+    "species": "Species"
 }

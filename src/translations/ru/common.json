@@ -1,9 +1,16 @@
 {
-    "title": "aaaaaaaaaa zu react und react-i18next",
+    "titlePersonalCard": "ПЕРСОНАЛЬНАЯ КАРТА",
     "buttons": {
         "details": "ДЕТАЛИ",
-        "edit": "РЕДАКТИРОВАТЬ"
-
+        "edit": "РЕДАКТИРОВАТЬ",
+        "back": "НАЗАД",
+        "delete": "УДАЛИТЬ",
+        "ok": "OK",
+        "returnToDefault": "ПО УМОЛЧАНИЮ"
+    },
+    "messages": {
+        "delete": "Персонаж удален",
+        "success": "Вы сохранили изменения"
     },
     "headersInChararcterPage": {
         "firstTitle": "КАР&СТАТУС",
@@ -16,5 +23,12 @@
     "statusUnderPic_Dead": "Умер",
     "race": "{{context}}",
     "race_Human": "Человек",
-    "race_Alien": "Пришелец"
+    "race_Alien": "Пришелец",
+    "searchTextPlaceholder": "Введите текст",
+    "searchTextButton": "Поиск",
+    "detailPageHeader": "Детальная страница персонажа",
+    "episodeList": "Список эпизодов персонажа",
+    "planet": "Планета",
+    "gender": "Пол",
+    "species": "Вид"
 }

@@ -149,8 +149,6 @@ class CharacterCards extends Component {
 
     return (
       <div>
-        <Button onClick={() => this.props.i18n.changeLanguage("ru")}>ru</Button>
-        <Button onClick={() => this.props.i18n.changeLanguage("en")}>en</Button>
         <Table
           pagination={{
             defaultPageSize: this.state.pageSize,
