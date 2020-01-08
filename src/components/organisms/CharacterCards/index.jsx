@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { Table, Avatar, Button } from "antd";
 import "./index.css";
 import { Link } from "react-router-dom";
+import { withTranslation } from "react-i18next";
 
-export default class CharacterCards extends Component {
+class CharacterCards extends Component {
   state = {
     currentPageInApi: 1,
     currentPage: 1,
@@ -22,6 +23,8 @@ export default class CharacterCards extends Component {
     this.props.getStatuses();
   };
   render() {
+    const { t } = this.props;
+
     const {
       characters,
       total,
@@ -34,7 +37,7 @@ export default class CharacterCards extends Component {
     const columns = [
       {
         align: "center",
-        title: "IMF&STATUS",
+        title: t("common:headersInChararcterPage.firstTitle"),
         dataIndex: "image",
 
         sorter: (a, b) => {
@@ -45,12 +48,16 @@ export default class CharacterCards extends Component {
         render: (image, character) => (
           <div>
             <Avatar size={100} icon="user" src={image}></Avatar>
-            <div>{character.status}</div>
+            <div>
+              {t("common:statusUnderPic", { context: `${character.status}` })}
+            </div>
+            {/* <div>{t("common:statusUnderPic", { character })}</div> */}
+            {/* <div>{character.status}</div> */}
           </div>
         )
       },
       {
-        title: "NAME",
+        title: t("common:headersInChararcterPage.secondTitle"),
         dataIndex: "name",
 
         sorter: (a, b) => {
@@ -60,9 +67,11 @@ export default class CharacterCards extends Component {
         }
       },
       {
-        title: "RACE",
+        title: t("common:headersInChararcterPage.thirdTitle"),
         dataIndex: "species",
-
+        render: species => (
+          <div>{t("common:race", { context: `${species}` })}</div>
+        ),
         sorter: (a, b) => {
           if (a.species > b.species) return 1;
           if (a.species < b.species) return -1;
@@ -80,7 +89,8 @@ export default class CharacterCards extends Component {
                 pathname: `/details/${character.id}`
               }}
             >
-              DETAILS
+              {t("common:buttons.details")}
+              {/* DETAILS */}
             </Link>
           </Button>
         )
@@ -101,7 +111,7 @@ export default class CharacterCards extends Component {
                 pathname: "/personalcard"
               }}
             >
-              EDIT
+              {t("common:buttons.edit")}
             </Link>
           </Button>
         )
@@ -138,25 +148,30 @@ export default class CharacterCards extends Component {
     };
 
     return (
-      <Table
-        pagination={{
-          defaultPageSize: this.state.pageSize,
-          showSizeChanger: true,
-          pageSizeOptions: ["5", "10", "20"],
-          total: total,
-          current: this.state.currentPage
-        }}
-        style={{ width: "700px" }}
-        loading={isLoading}
-        rowKey={obj => obj.id}
-        columns={columns}
-        dataSource={currentCharacters(
-          characters,
-          this.state.pageSize,
-          this.state.currentPage
-        )}
-        onChange={onChange}
-      />
+      <div>
+        <Button onClick={() => this.props.i18n.changeLanguage("ru")}>ru</Button>
+        <Button onClick={() => this.props.i18n.changeLanguage("en")}>en</Button>
+        <Table
+          pagination={{
+            defaultPageSize: this.state.pageSize,
+            showSizeChanger: true,
+            pageSizeOptions: ["5", "10", "20"],
+            total: total,
+            current: this.state.currentPage
+          }}
+          style={{ width: "700px" }}
+          loading={isLoading}
+          rowKey={obj => obj.id}
+          columns={columns}
+          dataSource={currentCharacters(
+            characters,
+            this.state.pageSize,
+            this.state.currentPage
+          )}
+          onChange={onChange}
+        />
+      </div>
     );
   }
 }
+export default withTranslation()(CharacterCards);

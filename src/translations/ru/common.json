@@ -1,0 +1,20 @@
+{
+    "title": "aaaaaaaaaa zu react und react-i18next",
+    "buttons": {
+        "details": "ДЕТАЛИ",
+        "edit": "РЕДАКТИРОВАТЬ"
+
+    },
+    "headersInChararcterPage": {
+        "firstTitle": "КАР&СТАТУС",
+        "secondTitle": "ИМЯ",
+        "thirdTitle": "РАСА"
+    },
+    "statusUnderPic": "{{context}}",
+    "statusUnderPic_unknown": "Неизвестно",
+    "statusUnderPic_Alive": "Жив",
+    "statusUnderPic_Dead": "Умер",
+    "race": "{{context}}",
+    "race_Human": "Человек",
+    "race_Alien": "Пришелец"
+}

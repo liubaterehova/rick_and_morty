@@ -1,0 +1,20 @@
+{
+    "title": "hhhhhhhhhhh zu react und react-i18next",
+    "buttons": {
+        "details": "DETAILS",
+        "edit": "EDIT"
+
+    },
+    "headersInChararcterPage": {
+        "firstTitle": "IMF&STATUS",
+        "secondTitle": "NAME",
+        "thirdTitle": "RACE"
+    },
+    "statusUnderPic": "{{context}}",
+    "statusUnderPic_unknown": "Unknown",
+    "statusUnderPic_Alive": "Alive",
+    "statusUnderPic_Dead": "Dead",
+    "race": "{{context}}",
+    "race_Human": "Human",
+    "race_Alien": "Alien"
+}
